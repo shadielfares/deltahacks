@@ -1,1 +1,5 @@
-console.log("Hello world");
+const main = async () => {};
+
+main().catch((err) => {
+  console.error(err);
+});

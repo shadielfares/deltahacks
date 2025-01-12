@@ -7,11 +7,22 @@ from langchain.schema import Document
 from langchain.prompts import prompt
 from langgraph.graph import START, StateGraph
 from langchain_community.document_loaders.csv_loader import CSVLoader
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 from fastapi import FastAPI 
 from pydantic import BaseModel
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 # if not os.environ.get("JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"):
 # os.environ["JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"] = getpass.getpass("Enter API key for Cohere: ")
 

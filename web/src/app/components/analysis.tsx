@@ -1,12 +1,15 @@
 import React from "react";
 
-export default function Analysis() {
+export default function Analysis({ analysis }: { analysis: string }) {
   return (
-    <div className="h-max flex-col justify-start items-start gap-2.5 inline-flex">
-      <div className="self-stretch text-[#c4dad2] text-[21px] font-normal font-sans">
+    <div className=" flex-col justify-start items-start gap-2.5 inline-flex ">
+      <div className=" text-[#c4dad2] text-[21px] font-normal font-sans tracking-tighter">
         Analysis:
       </div>
-      <div className="self-stretch grow shrink basis-0 bg-[#292727] rounded-[20px]"></div>
+      <div className="h-full w-full bg-[#292727] text-white rounded-[20px] gap-10 px-6 py-5 ">
+        {" "}
+        {analysis}
+      </div>
     </div>
   );
 }

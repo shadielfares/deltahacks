@@ -7,6 +7,7 @@ import Consultation from "./components/consultation";
 import Summary from "./components/summary";
 import TreamentPlan from "./components/treament-plan";
 import Medicine from "./components/medicine";
+import Analysis from "./components/analysis";
 
 export default function ProfileClient() {
   const { error, isLoading } = useUser();
@@ -35,32 +36,31 @@ export default function ProfileClient() {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <div className="bg-[#101010] min-h-screen p-6">
-      <div className="flex flex-col gap-6">
-        <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg">
-          <div className="text-gray-300 text-xl mb-4">Summary:</div>
+    <div className="bg-[#101010] w-full p-10 items-end overflow-hidden">
+      <div className="flex flex-row gap-6 w-full ">
+        <div className="flex flex-col gap-4 w-1/2 h-1/2">
           <Summary
             summary={
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet tortor sit amet suscipit sollicitudin. Donec a tincidunt nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi volutpat ullamcorper urna sed ornare. Nunc varius, nisi at condimentum pulvinar, ante risus elementum enim, vel tempor dui leo eu risus. Phasellus ultricies orci bibendum ante mollis aliquam. Nulla sapien leo, lacinia eu justo mattis, dictum feugiat neque. Sed quis diam massa."
             }
           />
+          <Analysis analysis={"Something Here"} />
         </div>
 
-        <div className="flex gap-6">
-          <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg w-1/2">
-            <div className="text-gray-300 text-xl mb-4">Treatment:</div>
-            <Medicine medicine="2g" dosage="5g" />
+        <div className="flex flex-col gap-4 w-1/2 h-1/2 items-end justify-end align-end ">
+          <div className="self-stretch text-[#c4dad2] text-[21px] font-normal font-sans tracking-tighter">
+            Treatment:
           </div>
 
-          <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg w-1/2">
-            <div className="text-gray-300 text-xl mb-4">Treatment Plan</div>
+          <div className=" flex-grow rounded-lg  shadow-lg gap-4">
+            <Medicine medicine="2g" dosage="5g" />
             <TreamentPlan treatmentPlan="Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment" />
           </div>
         </div>
+      </div>
 
-        <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg">
-          <Consultation />
-        </div>
+      <div className=" rounded-lg shadow-lg py-4">
+        <Consultation />
       </div>
     </div>
   );

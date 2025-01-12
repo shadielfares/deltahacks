@@ -115,7 +115,7 @@ def generate(prompt: str, patient_id: str, func: int):
         templated_prompt = get_ask_template(prompt, patient_id)
     response = graph.invoke({"question": f'{templated_prompt}'})["answer"]
     result = [response.split('\n')]
-    result = [line.split(' ', 1)[1] for line in result if ': ' in line]
+    result = [line.split(': ', 1)[1] for line in result[0]]
     return result
 
 #indices: 0 - potential diagnosis, 1 - recommended treatment, 2 - dosage calculation, 3 - analysis

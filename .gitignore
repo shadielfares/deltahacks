@@ -5,3 +5,4 @@ server/node_modules
 /server/rag/data
 .idea
 .history
+venv/

@@ -91,7 +91,7 @@ def get_ask_template(prompt: str, patient_id: str) -> str:
     - Potential diagnoses: [a list of potential diagnoses, MUST include the accuracy rate of the prediction in percentage to the nearest percent]
     - Recommended Treatment: [Your recommended treatment based on the patient's medical history (allergies, ongoing conditions, ongoing devices, medications, observations, procedures), etc]
     - Dosage Calculation: [Your exact prescription of EVERY of your recommended treatment from above here, including calculated concentration/dosage/whatever other means of quantification based on patient data & medical history]
-    - Analysis: [give an overall summary of your response in 40-100 words]
+    - Analysis: [A description of potential diagnoses AND give an overall summary of your response in 70-100 words, relate that to the patient's medical history]
 
     Question: {prompt}
     PATIENT: {patient_id}
@@ -102,7 +102,7 @@ def get_summarize_template(patient_id: str):
     You are a medical assistant. Based on the context provided, answer the question in the following structured format:
 
     - Past conditions: [get past diagnoses, conditions, allergies]
-    - Treatments: [get the list of medications, treatments]
+    - Treatments: [get the EXACT list of medications, treatments]
 
     Question: retrieve this patient's medical records
     PATIENT: {patient_id}
@@ -123,7 +123,12 @@ def generate(prompt: str, patient_id: str, func: int):
 async def ask(request: AskRequest):
     try:
         response = generate(request.prompt, request.patient_id, 1)
-        return response
+        return {
+            'potential_diagnosis': response[0],
+            'recommended_treatment': response[1],
+            'dosage_calculation': response[2],
+            'analysis': response[3]
+        }
     except Exception as e:
         return f"We ran into the error: {e} "   
 
@@ -132,6 +137,9 @@ async def ask(request: AskRequest):
 async def summarize(request: AskRequest):
     try:
         response = generate("", request.patient_id, 0)
-        return response
+        return {
+            'past_conditions': response[0],
+            'treatments': response[1],
+        }
     except Exception as e:
         return f"We ran into the error: {e} "

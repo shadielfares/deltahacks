@@ -14,7 +14,7 @@ const LogoutContainer = () => {
     <div className="flex flex-col w-full justify-start">
       {user ? (
         <>
-          <h1 className="text-white text-sm font-normal font-sans text-left">
+          <h1 className="text-white text-[14px] font-normal font-sans text-left tracking-tighter">
             Logged in as {user?.name}
           </h1>
           <div>

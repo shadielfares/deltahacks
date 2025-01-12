@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///home/chadeng/2024/deltahacks/web/src/app/page.tsx"],"sourcesContent":["\"use client\";\n\nimport { useUser } from \"@auth0/nextjs-auth0/client\";\n\nexport default function ProfileClient() {\n  const { user, error, isLoading } = useUser();\n\n  if (isLoading) return <div>Loading...</div>;\n  if (error) return <div>{error.message}</div>;\n\n  return <div>Skibidi Sigma</div>;\n}\n"],"names":[],"mappings":";;;;AAEA;;;AAFA;;AAIe,SAAS;;IACtB,MAAM,EAAE,IAAI,EAAE,KAAK,EAAE,SAAS,EAAE,GAAG,CAAA,GAAA,wKAAA,CAAA,UAAO,AAAD;IAEzC,IAAI,WAAW,qBAAO,6LAAC;kBAAI;;;;;;IAC3B,IAAI,OAAO,qBAAO,6LAAC;kBAAK,MAAM,OAAO;;;;;;IAErC,qBAAO,6LAAC;kBAAI;;;;;;AACd;GAPwB;;QACa,wKAAA,CAAA,UAAO;;;KADpB"}},
-    {"offset": {"line": 52, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

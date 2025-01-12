@@ -15,7 +15,7 @@ llm = ChatCohere(model="command-r-plus", cohere_api_key="ZIw76WbFxpV9m2pmFDnceBJ
 embeddings = CohereEmbeddings(model="embed-english-v3.0", cohere_api_key="ZIw76WbFxpV9m2pmFDnceBJqOi9e3GEAelwDd5k1")
 
 # pinecone
-index_name = "cohere-embed-english-v3"
+index_name = "database"
 pc = Pinecone(api_key="pcsk_7GqzxA_C5DSEGuHFBKKd7NnhFGTWNjkdxrp77SNBjzTztr8yfzpDnzPs9W3Ga9GSGP2Rim")
 if not pc.has_index(index_name):
     pc.create_index(

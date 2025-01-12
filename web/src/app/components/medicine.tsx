@@ -14,7 +14,6 @@ export default function Medicine({
       <div className="text-center text-[#c4dad2] text-[21px] font-normal font-['DM Sans']">
         Recommended {medicine} in {dosage} dosages.{" "}
       </div>
-      <div className="self-stretch grow shrink basis-0 bg-[#292727] rounded-[20px]"></div>
     </div>
   );
 }

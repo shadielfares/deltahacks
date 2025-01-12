@@ -27,38 +27,36 @@ export default function ProfileClient() {
 
     fetchData(
       "Patient is suffering from Dry skin, Itchy skin, Skin rash, Bumps on your skin, Thick, leathery patches of skin, Flaky, scaly or crusty skin, Swelling. based on your medical knowledge",
-      "d604da9-9a81-4ba9-80c2-de3375d59b40'"
+      "d604da9-9a81-4ba9-80c2-de3375d59b40"
     );
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (isLoading)
+    return <div className="text-center text-gray-400 mt-10">Loading...</div>;
+  if (error)
+    return (
+      <div className="text-center text-red-400 mt-10">{error.message}</div>
+    );
 
   return (
-    <div className="bg-[#101010] min-h-screen p-6">
-      <div className="flex flex-col gap-6">
-        <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg">
-          <div className="text-gray-300 text-xl mb-4">Summary:</div>
-          <Summary
-            summary={
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet tortor sit amet suscipit sollicitudin. Donec a tincidunt nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi volutpat ullamcorper urna sed ornare. Nunc varius, nisi at condimentum pulvinar, ante risus elementum enim, vel tempor dui leo eu risus. Phasellus ultricies orci bibendum ante mollis aliquam. Nulla sapien leo, lacinia eu justo mattis, dictum feugiat neque. Sed quis diam massa."
-            }
-          />
-        </div>
+    <div className="bg-[#101010] min-h-screen p-8">
+      <div className="max-w-5xl mx-auto flex flex-col gap-8">
+        {/* Summary Section */}
+        <Summary summary={data} />
 
-        <div className="flex gap-6">
-          <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg w-1/2">
-            <div className="text-gray-300 text-xl mb-4">Treatment:</div>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg flex-1">
+            <div className="text-gray-300 text-xl mb-4">Medicine</div>
             <Medicine medicine="2g" dosage="5g" />
           </div>
 
-          <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg w-1/2">
-            <div className="text-gray-300 text-xl mb-4">Treatment Plan</div>
+          <div className="bg-[#1a1a1a] rounded-lg p-2 shadow-lg flex-1">
             <TreamentPlan treatmentPlan="Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment Treatment" />
           </div>
         </div>
 
-        <div className="bg-[#1a1a1a] rounded-lg p-6 shadow-lg">
+        {/* Consultation Section */}
+        <div className="bg-[#1a1a1a] rounded-lg p-8 shadow-lg">
           <Consultation />
         </div>
       </div>

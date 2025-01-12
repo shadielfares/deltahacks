@@ -19,7 +19,9 @@ export default function Consultation() {
           className="w-full h-[60px] py-4 text-xl font-normal bg-[#292727] text-[#c4dad2] font-sans placeholder:tracking-tighter placeholder:flex placeholder:flex-col placeholder:justify-center placeholder:text-xl placeholder:font-normal placeholder:font-sans placeholder:italic placeholder:bg-[#292727] resize-none overflow-hidden"
           placeholder="Prompt the patient model here."
         ></textarea>
-        <Image src={SubmitIcon} alt="" />
+        <button type="submit" className="h-[60px]">
+          <Image src={SubmitIcon} alt="" />
+        </button>
       </div>
     </div>
   );

@@ -123,6 +123,7 @@ def generate(prompt: str, patient_id: str, func: int):
 async def ask(request: AskRequest):
     try:
         response = generate(request.prompt, request.patient_id, 1)
+
         return {
             'potential_diagnosis': response[0],
             'recommended_treatment': response[1],

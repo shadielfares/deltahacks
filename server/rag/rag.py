@@ -46,15 +46,14 @@ class State(TypedDict):
 
 def retrieve(state: State):
     try:
-        retrieved_docs = vector_store.similarity_search(state["question"], k=40)
-        print(f'docs: {retrieved_docs}')
+        retrieved_docs = vector_store.similarity_search(state["question"], k=50)
         patient_id = state["question"].split("PATIENT: ")[-1].strip()
-        filtered_docs = [doc for doc in retrieved_docs if f'PATIENT: {patient_id}' in doc.page_content]
-        print(f'filtered docs: {filtered_docs}')
+        filtered_docs = [doc for doc in retrieved_docs if f'PATIENT: {patient_id}' in doc.page_content
+                         or 'PATIENT:' not in doc.page_content]
     except Exception as e:
         print(f"Error during similarity search: {e}")
         return {"context": []}
-    return {"context": retrieved_docs}
+    return {"context": filtered_docs}
 
 def generate(state: State):
     docs_content = "\n\n".join(doc.page_content for doc in state["context"])
@@ -66,8 +65,21 @@ graph_builder = StateGraph(State).add_sequence([retrieve, generate])
 graph_builder.add_edge(START, "retrieve")
 graph = graph_builder.compile()
 
-def ask(prompt: str, patient_id: str): #todo: prompt & response templates
-    response = graph.invoke({"question": f'{prompt}\nPATIENT: {patient_id}'})
-    print(f'Context: {response["context"]}\n\n')
-    print(f'Answer: {response["answer"]}')
-    return response
+def get_template(prompt: str, patient_id: str) -> str:
+    return f"""
+    You are a medical assistant. Based on the context provided, answer the question in the following structured format:
+
+    - Potential diagnoses: [a list of potential diagnoses, MUST include the accuracy rate of the prediction in percentage to the nearest percent]
+    - Recommended Treatment: [Your recommended treatment based on the patient's medical history (allergies, ongoing conditions, ongoing devices, medications, observations, procedures), etc]
+    - Dosage Calculation: [Your exact prescription of EVERY of your recommended treatment from above here, including calculated concentration/dosage/whatever other means of quantification based on patient data & medical history]
+    - Analysis: [give an overall summary of your response in 40-100 words]
+    - Context used: [summarize the context that was used and give details to specific attributes of medical history if related]
+
+    Question: {prompt}
+    PATIENT: {patient_id}
+    """
+
+def ask(prompt: str, patient_id: str):
+    templated_prompt = get_template(prompt, patient_id)
+    response = graph.invoke({"question": f'{templated_prompt}'})
+    return response["answer"]

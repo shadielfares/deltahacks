@@ -8,6 +8,9 @@ from langchain.prompts import prompt
 from langgraph.graph import START, StateGraph
 from langchain_community.document_loaders.csv_loader import CSVLoader
 
+from fastapi import FastAPI 
+from pydantic import BaseModel
+app = FastAPI()
 # if not os.environ.get("JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"):
 # os.environ["JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"] = getpass.getpass("Enter API key for Cohere: ")
 
@@ -66,8 +69,16 @@ graph_builder = StateGraph(State).add_sequence([retrieve, generate])
 graph_builder.add_edge(START, "retrieve")
 graph = graph_builder.compile()
 
-def ask(prompt: str, patient_id: str): #todo: prompt & response templates
-    response = graph.invoke({"question": f'{prompt}\nPATIENT: {patient_id}'})
-    print(f'Context: {response["context"]}\n\n')
-    print(f'Answer: {response["answer"]}')
-    return response
+class AskRequest(BaseModel):
+    prompt: str
+    patiend_id: str
+
+@app.post('/ask')
+async def ask(request: AskRequest): #todo: prompt & response templates
+    try:
+        response = graph.invoke({"question": f'{request.prompt}\nPATIENT: {request.patient_id}'})
+        print(f'Context: {response["context"]}\n\n')
+        print(f'Answer: {response["answer"]}')
+        return response
+    except Exception as e:
+        return f"We ran into the error: {e} "    

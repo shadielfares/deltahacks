@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "fastapi": "^0.0.8"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0"

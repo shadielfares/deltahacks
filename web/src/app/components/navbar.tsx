@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import LogoutPage from "./logout";
-
+import LogoutContainer from "./logout";
 // Add Patient List
 
 export default function Navbar() {
@@ -20,7 +19,7 @@ export default function Navbar() {
           Patients
         </div>
       </div>
-      <LogoutPage />
+      <LogoutContainer />
     </div>
   );
 }

@@ -10,6 +10,7 @@ from langchain_community.document_loaders.csv_loader import CSVLoader
 
 from fastapi import FastAPI 
 from pydantic import BaseModel
+
 app = FastAPI()
 # if not os.environ.get("JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"):
 # os.environ["JSkmjewo6AnwoBJROD4SnPd7gN4HI4khSN43Ek7b"] = getpass.getpass("Enter API key for Cohere: ")
@@ -49,15 +50,14 @@ class State(TypedDict):
 
 def retrieve(state: State):
     try:
-        retrieved_docs = vector_store.similarity_search(state["question"], k=40)
-        print(f'docs: {retrieved_docs}')
+        retrieved_docs = vector_store.similarity_search(state["question"], k=50)
         patient_id = state["question"].split("PATIENT: ")[-1].strip()
-        filtered_docs = [doc for doc in retrieved_docs if f'PATIENT: {patient_id}' in doc.page_content]
-        print(f'filtered docs: {filtered_docs}')
+        filtered_docs = [doc for doc in retrieved_docs if f'PATIENT: {patient_id}' in doc.page_content
+                         or 'PATIENT:' not in doc.page_content]
     except Exception as e:
         print(f"Error during similarity search: {e}")
         return {"context": []}
-    return {"context": retrieved_docs}
+    return {"context": filtered_docs}
 
 def generate(state: State):
     docs_content = "\n\n".join(doc.page_content for doc in state["context"])
@@ -73,12 +73,26 @@ class AskRequest(BaseModel):
     prompt: str
     patiend_id: str
 
+def get_template(prompt: str, patient_id: str) -> str:
+    return f"""
+    You are a medical assistant. Based on the context provided, answer the question in the following structured format:
+
+    - Potential diagnoses: [a list of potential diagnoses, MUST include the accuracy rate of the prediction in percentage to the nearest percent]
+    - Recommended Treatment: [Your recommended treatment based on the patient's medical history (allergies, ongoing conditions, ongoing devices, medications, observations, procedures), etc]
+    - Dosage Calculation: [Your exact prescription of EVERY of your recommended treatment from above here, including calculated concentration/dosage/whatever other means of quantification based on patient data & medical history]
+    - Analysis: [give an overall summary of your response in 40-100 words]
+    - Context used: [summarize the context that was used and give details to specific attributes of medical history if related]
+
+    Question: {prompt}
+    PATIENT: {patient_id}
+    """
+    
 @app.post('/ask')
 async def ask(request: AskRequest): #todo: prompt & response templates
     try:
-        response = graph.invoke({"question": f'{request.prompt}\nPATIENT: {request.patient_id}'})
-        print(f'Context: {response["context"]}\n\n')
-        print(f'Answer: {response["answer"]}')
-        return response
+        templated_prompt = get_template(request.prompt, request.patient_id)
+        response = graph.invoke({"question": f'{templated_prompt}'})
+        return response["answer"]
     except Exception as e:
-        return f"We ran into the error: {e} "    
+        return f"We ran into the error: {e} "   
+

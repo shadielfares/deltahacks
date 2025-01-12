@@ -71,7 +71,7 @@ graph = graph_builder.compile()
 
 class AskRequest(BaseModel):
     prompt: str
-    patiend_id: str
+    patient_id: str
 
 def get_template(prompt: str, patient_id: str) -> str:
     return f"""

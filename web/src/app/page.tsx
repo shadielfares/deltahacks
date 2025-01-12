@@ -8,13 +8,5 @@ export default function ProfileClient() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  return (
-    user && (
-      <div>
-        <img src={user.picture as string} alt={user.name as string} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-      </div>
-    )
-  );
+  return <div>Skibidi Sigma</div>;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import LogoutPage from "./logout";
-import patientList from "./patient-list";
 
 // Add Patient List
 
@@ -20,7 +19,7 @@ export default function Navbar() {
           Patients
         </div>
       </div>
-      <LogoutPage name="Dr. Brownie" />
+      <LogoutPage />
     </div>
   );
 }

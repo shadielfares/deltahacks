@@ -11,20 +11,22 @@ const LogoutContainer = () => {
   const router = useRouter();
 
   return (
-    <div>
+    <div className="flex flex-col w-full justify-start">
       {user ? (
         <>
-          <h1 className="text-center text-white text-sm font-normal font-sans">
+          <h1 className="text-white text-sm font-normal font-sans text-left">
             Logged in as {user?.name}
           </h1>
-          <motion.button
-            onClick={() => router.push("/api/auth/logout")}
-            className="w-full mt-4 h-[52px] p-[17px] bg-[#e9efec] rounded-[10px] justify-center items-center gap-2.5 inline-flex overflow-hidden"
-            style={{ scale: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-          >
-            Sign Out
-          </motion.button>
+          <div>
+            <motion.button
+              onClick={() => router.push("/api/auth/logout")}
+              className="w-full mt-4 h-[52px] p-[17px] bg-[#e9efec] rounded-[10px] justify-center items-center gap-2.5 inline-flex overflow-hidden"
+              style={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              Sign Out
+            </motion.button>
+          </div>
         </>
       ) : null}
     </div>

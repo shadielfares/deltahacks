@@ -64,7 +64,7 @@ export default function ProfileClient() {
           </div>
 
           <div className=" flex-grow rounded-lg  shadow-lg gap-4">
-            <Medicine medicine="2g" dosage="5g" />
+            <Medicine medicine={data3} />
             <TreamentPlan
               treatmentPlan={
                 data4 ? data4 : "Here is where the treatment plan will be"

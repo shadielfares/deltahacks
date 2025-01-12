@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 
-// Include the logic for Auth 0 to actually log out and route to Login Page
-
 const LogoutContainer = ({ name }: { name: string }) => {
   const handleSignOut = () => {
     console.log(`${name} signed out.`);

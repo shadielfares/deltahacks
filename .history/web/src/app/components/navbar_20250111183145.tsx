@@ -2,8 +2,6 @@ import React from "react";
 import LogoutPage from "./logout";
 import patientList from "./patient-list";
 
-// Add Patient List
-
 export default function Navbar() {
   return (
     <div className="flex flex-col w-[221px] h-[832px] px-4 py-[13px] bg-[#1b1a1a] justify-between items-start overflow-hidden">

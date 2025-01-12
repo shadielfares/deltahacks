@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 159, "column": 0}, "map": {"version":3,"sources":["file:///home/chadeng/2024/deltahacks/web/src/app/api/auth/%5Bauth0%5D/route.ts"],"sourcesContent":["// app/api/auth/[auth0]/route.js\nimport { handleAuth } from \"@auth0/nextjs-auth0\";\n\nexport const GET = handleAuth();\n"],"names":[],"mappings":"AAAA,gCAAgC;;;;AAChC;;AAEO,MAAM,MAAM,CAAA,GAAA,6JAAA,CAAA,aAAU,AAAD"}},
+    {"offset": {"line": 166, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

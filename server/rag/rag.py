@@ -46,7 +46,11 @@ class State(TypedDict):
 
 def retrieve(state: State):
     try:
-        retrieved_docs = vector_store.similarity_search(state["question"])
+        retrieved_docs = vector_store.similarity_search(state["question"], k=40)
+        print(f'docs: {retrieved_docs}')
+        patient_id = state["question"].split("PATIENT: ")[-1].strip()
+        filtered_docs = [doc for doc in retrieved_docs if f'PATIENT: {patient_id}' in doc.page_content]
+        print(f'filtered docs: {filtered_docs}')
     except Exception as e:
         print(f"Error during similarity search: {e}")
         return {"context": []}
@@ -62,9 +66,8 @@ graph_builder = StateGraph(State).add_sequence([retrieve, generate])
 graph_builder.add_edge(START, "retrieve")
 graph = graph_builder.compile()
 
-def prompt(prompt: str, patient_id: str): #todo: prompt & response templates
-    response = graph.invoke({"question": f'{prompt}\npatient id: {patient_id}'})
+def ask(prompt: str, patient_id: str): #todo: prompt & response templates
+    response = graph.invoke({"question": f'{prompt}\nPATIENT: {patient_id}'})
     print(f'Context: {response["context"]}\n\n')
     print(f'Answer: {response["answer"]}')
     return response
-
